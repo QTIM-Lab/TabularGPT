@@ -7,7 +7,7 @@ from trainers.tabular_gpt_trainer import TrainerWithVal
 
 from preprocessors.titanic_preprocessor import TitanicPreprocessor
 
-def train_model(device, batch_size, learning_rate):
+def train_model(device, n_layer, n_head, n_embd, attn_pdrop, embd_pdrop, resid_pdrop, batch_size, learning_rate):
     train_data = pd.read_csv('./examples/titanic/titanic_train.csv')
 
     preprocessing = TitanicPreprocessor()
@@ -24,9 +24,9 @@ def train_model(device, batch_size, learning_rate):
     # 'gpt2' = dict(n_layer=12, n_head=12, n_embd=768)  # 124M params
     # model_config.model_type = 'gpt2'
     model_config.model_type = None
-    model_config.n_layer = 8
-    model_config.n_head = 8
-    model_config.n_embd = 2048
+    model_config.n_layer = n_layer
+    model_config.n_head = n_head
+    model_config.n_embd = n_embd
     
     model_config.num_vars = 8
     model_config.out_dim = 1  # state_dim_1, state_dim_2
@@ -40,9 +40,9 @@ def train_model(device, batch_size, learning_rate):
         '7': 4  # Embarked has 4 (null is 0)
     }
     # it's normally just 0.1 for all
-    model_config.attn_pdrop = 0.0
-    model_config.embd_pdrop = 0.0
-    model_config.resid_pdrop = 0.0
+    model_config.attn_pdrop = attn_pdrop
+    model_config.embd_pdrop = embd_pdrop
+    model_config.resid_pdrop = resid_pdrop
     model = TabularGPT(model_config,device,output_type="binaryclass")
 
     # Instantiate minGPT trainer
@@ -81,6 +81,18 @@ def main():
     #                     help="Path to the training data.")
     # parser.add_argument('--output-dir', type=str, required=True,
     #                     help="Directory to save the trained model.")
+    parser.add_argument('--n-layer', type=int, required=True,
+                        help="Number of layers.")
+    parser.add_argument('--n-head', type=float, required=True,
+                        help="Number of heads.")
+    parser.add_argument('--n-embd', type=int, required=True,
+                        help="Embedding dim.")
+    parser.add_argument('--attn-pdrop', type=float, required=True,
+                        help="attention layer dropout.")
+    parser.add_argument('--embd-pdrop', type=float, required=True,
+                        help="embed layer dropout.")
+    parser.add_argument('--resid-pdrop', type=float, required=True,
+                        help="resid layer dropout.")
     parser.add_argument('--batch-size', type=int, required=True,
                         help="Batch size.")
     parser.add_argument('--learning-rate', type=float, required=True,
