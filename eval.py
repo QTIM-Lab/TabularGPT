@@ -24,9 +24,9 @@ def eval_model(device, batch_size):
     # 'gpt2' = dict(n_layer=12, n_head=12, n_embd=768)  # 124M params
     # model_config.model_type = 'gpt2'
     model_config.model_type = None
-    model_config.n_layer = 16
-    model_config.n_head = 8
-    model_config.n_embd = 512
+    model_config.n_layer = 4
+    model_config.n_head = 4
+    model_config.n_embd = 1024
     
     model_config.num_vars = 8
     model_config.out_dim = 1  # state_dim_1, state_dim_2
