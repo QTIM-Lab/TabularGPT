@@ -84,19 +84,47 @@ class TrainerWithVal(Trainer):
                     print(f"iter_dt {self.iter_dt * 1000:.2f}ms; iter {self.iter_num}: train loss {self.loss.item():.5f}")
 
                 model.eval()  # Set the model to evaluation mode
+                # with torch.no_grad():
+                #     val_losses = []
+                #     for val_batch in val_loader:
+                #         # val_batch = [t.to(self.device) for t in val_batch]
+                #         val_x, val_y = val_batch
+                #         # val_x = {key: t.to(device).long() if 'embed' in key else t.to(device) for key, t in val_x.items()}
+                #         val_x = val_x.to(device)
+                #         val_y = val_y.to(device)
+                #         val_logits, val_loss = model(val_x, val_y)
+                #         val_losses.append(val_loss.item())
+                #     average_val_loss = sum(val_losses) / len(val_losses)
+
                 with torch.no_grad():
                     val_losses = []
+                    val_correct = 0
+                    val_total = 0
+
                     for val_batch in val_loader:
-                        # val_batch = [t.to(self.device) for t in val_batch]
                         val_x, val_y = val_batch
-                        # val_x = {key: t.to(device).long() if 'embed' in key else t.to(device) for key, t in val_x.items()}
                         val_x = val_x.to(device)
                         val_y = val_y.to(device)
+
                         val_logits, val_loss = model(val_x, val_y)
                         val_losses.append(val_loss.item())
+
+                        # Convert logits to probabilities using sigmoid
+                        val_probs = torch.sigmoid(val_logits[:,-1,:])
+
+                        # Threshold probabilities to get binary predictions
+                        val_preds = (val_probs[:, -1] >= 0.5).float()
+
+                        # Calculate accuracy
+                        val_correct += (val_preds == val_y).sum().item()
+                        val_total += val_y.size(0)
+
                     average_val_loss = sum(val_losses) / len(val_losses)
+                    val_accuracy = val_correct / val_total
+
                     if log_level:
                         print("avg val loss: ", average_val_loss)
+                        print("avg val acc: ", val_accuracy)
 
                 # Update the best validation loss and check for improvement
                 if average_val_loss < best_val_loss:
