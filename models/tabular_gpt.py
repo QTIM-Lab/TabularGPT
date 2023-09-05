@@ -43,8 +43,8 @@ class TabularGPT(GPT):
                                              nn.Linear(
                                                  config.n_embd//2, 
                                                  config.n_embd, 
-                                                 bias=False)),
-                                            nn.LayerNorm(config.n_embd))
+                                                 bias=False),
+                                            nn.LayerNorm(config.n_embd)))
                 for i in range(config.num_vars)
             }
         )
