@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
-from models.min_gpt import GPT, Block
+from models.min_gpt import GPT, Block, NewGELU
 
 class TabularGPT(GPT):
     def __init__(self, config, device, output_type="regression"):
