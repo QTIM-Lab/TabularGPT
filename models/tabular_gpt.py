@@ -38,10 +38,13 @@ class TabularGPT(GPT):
                               else nn.Sequential(nn.Linear(1,
                                              config.n_embd//2,
                                              bias=False), 
+                                             nn.LayerNorm(config.n_embd//2),
+                                             NewGELU(),
                                              nn.Linear(
                                                  config.n_embd//2, 
                                                  config.n_embd, 
-                                                 bias=False))) 
+                                                 bias=False)),
+                                            nn.LayerNorm(config.n_embd))
                 for i in range(config.num_vars)
             }
         )
