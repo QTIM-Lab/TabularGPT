@@ -41,7 +41,7 @@ class TitanicPreprocessor(Preprocessor):
         
     #     return train_data, y_train_data
     
-    def preprocess_train_and_val(self, data, val_size=0.05):
+    def preprocess_train_and_val(self, data, val_size=0.2):
         # Drop unnecessary columns
         data = data.drop(columns=['PassengerId', 'Name', 'Ticket'])
 

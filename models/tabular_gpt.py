@@ -21,13 +21,27 @@ class TabularGPT(GPT):
         ))
 
         # Set transformer.wte below as modality fusion
+        # self.transformer.wte = nn.ModuleDict(
+        #     {
+        #         f'var_n{i}': (nn.Embedding(config.embed_vars[str(i)],
+        #                                    config.n_embd) if str(i) in config.embed_vars
+        #                       else nn.Linear(1,
+        #                                      config.n_embd,
+        #                                      bias=True)) 
+        #         for i in range(config.num_vars)
+        #     }
+        # )
         self.transformer.wte = nn.ModuleDict(
             {
                 f'var_n{i}': (nn.Embedding(config.embed_vars[str(i)],
                                            config.n_embd) if str(i) in config.embed_vars
-                              else nn.Linear(1,
-                                             config.n_embd,
-                                             bias=True)) 
+                              else nn.Sequential(nn.Linear(1,
+                                             config.n_embd//2,
+                                             bias=False), 
+                                             nn.Linear(
+                                                 config.n_embd//2, 
+                                                 config.n_embd, 
+                                                 bias=False))) 
                 for i in range(config.num_vars)
             }
         )
