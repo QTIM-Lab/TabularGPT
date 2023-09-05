@@ -12,7 +12,7 @@ class TabularGPT(GPT):
         # Karpathy's had the output dim be vocab size, but ours is a flat dim
         # when predicting next time step, though this can be changed i.e.
         # if doing multi-class classification or something
-        self.lm_head = nn.Linear(config.n_embd, config.out_dim, bias=True)
+        self.lm_head = nn.Linear(config.n_embd, config.out_dim, bias=False)
         self.transformer = nn.ModuleDict(dict(
             # wpe=nn.Embedding(config.block_size, config.n_embd),
             drop=nn.Dropout(config.embd_pdrop),
