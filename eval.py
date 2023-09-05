@@ -54,7 +54,7 @@ def eval_model(device, batch_size):
             test_outputs.append(output)
 
     passenger_ids = []
-    with open('titanic_test.csv', mode='r') as file:
+    with open('./examples/titanic/titanic_test.csv', mode='r') as file:
         reader = csv.DictReader(file)
         for row in reader:
             passenger_ids.append(row['PassengerId'])
