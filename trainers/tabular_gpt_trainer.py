@@ -110,17 +110,13 @@ class TrainerWithVal(Trainer):
                         val_losses.append(val_loss.item())
 
                         # Convert logits to probabilities using sigmoid
-                        print("val logits shape: ", val_logits.shape)
-                        print("val y shape: ", val_y.shape)
                         val_probs = torch.sigmoid(val_logits[:,-1,0])
-                        print("val probs shape: ", val_probs.shape)
 
                         # Threshold probabilities to get binary predictions
-                        val_preds = (val_probs[:, -1] >= 0.5).float()
-                        print("val preds shape: ", val_preds.shape)
+                        val_preds = (val_probs >= 0.5).float()
 
                         # Calculate accuracy
-                        val_correct += (val_preds == val_y).sum().item()
+                        val_correct += (val_preds == val_y[:, -1]).sum().item()
                         val_total += val_y.size(0)
 
                     average_val_loss = sum(val_losses) / len(val_losses)
