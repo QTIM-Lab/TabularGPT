@@ -100,7 +100,9 @@ def main():
 
     args = parser.parse_args()
 
-    train_model(device, args.batch_size, args.learning_rate)
+    train_model(device, args.n_layer, args.n_head, args.n_embd, 
+                args.attn_pdrop, args.embd_pdrop, args.resid_pdrop, 
+                args.batch_size, args.learning_rate)
 
 if __name__ == "__main__":
     main()
