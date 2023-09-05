@@ -74,12 +74,12 @@ class TitanicPreprocessor(Preprocessor):
         # z-score age
         self.fit_scaler(x_train[['Age']], 'Age')
         x_train['Age'] = self.transform_scaler(x_train[['Age']], 'Age')
-        x_val['Age'] = self.transform_scaler(x_train[['Age']], 'Age')
+        x_val['Age'] = self.transform_scaler(x_val[['Age']], 'Age')
         
         # z-score fare
         self.fit_scaler(x_train[['Fare']], 'Fare')
         x_train['Fare'] = self.transform_scaler(x_train[['Fare']], 'Fare')
-        x_val['Fare'] = self.transform_scaler(x_train[['Fare']], 'Fare')
+        x_val['Fare'] = self.transform_scaler(x_val[['Fare']], 'Fare')
 
         # TENSORS
 
