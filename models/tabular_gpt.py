@@ -36,7 +36,7 @@ class TabularGPT(GPT):
 
         # save user specified embed variables
         self.embed_vars = config.embed_vars
-        # self.GELU = NewGELU()
+        self.GELU = NewGELU()
         
 
     def freeze_projection_weights(self):
@@ -65,8 +65,7 @@ class TabularGPT(GPT):
                 var_embed = self.transformer.wte['var_n' + str(i)](idx[:,i].long())
             else:
                 var_embed = self.transformer.wte['var_n' + str(i)](idx[:,i:(i+1)])
-                # var_embed = NewGELU(var_embed)
-                # var_embed = self.GELU(var_embed)
+                var_embed = self.GELU(var_embed)
             var_embed = var_embed.unsqueeze(dim=1)
             var_embeddings.append(var_embed)
         # cat along "words" since each "word" has own embed
