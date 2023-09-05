@@ -43,7 +43,7 @@ def eval_model(device, batch_size):
     model_config.attn_pdrop = 0.0
     model_config.embd_pdrop = 0.0
     model_config.resid_pdrop = 0.0
-    model = TabularGPT(model_config,device,output_type="binaryclass")
+    model = TabularGPT(model_config,device,output_type="binaryclass").to(device)
     checkpoint = torch.load('experiment_model.pt')
     model.load_state_dict(checkpoint)
 
