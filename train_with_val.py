@@ -7,7 +7,7 @@ from trainers.tabular_gpt_trainer import TrainerWithVal
 
 from preprocessors.titanic_preprocessor import TitanicPreprocessor
 
-def train_model(device, batch_size):
+def train_model(device, batch_size, learning_rate):
     train_data = pd.read_csv('./examples/titanic/titanic_train.csv')
 
     preprocessing = TitanicPreprocessor()
@@ -48,7 +48,7 @@ def train_model(device, batch_size):
     # Instantiate minGPT trainer
     train_config = TrainerWithVal.get_default_config()
     train_config.batch_size = batch_size
-    train_config.learning_rate = 7e-8  # 4e-5 decent for 0.09M params
+    train_config.learning_rate = learning_rate  # 4e-5 decent for 0.09M params
     train_config.max_iters = 100000
     train_config.num_workers = 0
     train_config.val_interval = 100
@@ -83,8 +83,8 @@ def main():
     #                     help="Directory to save the trained model.")
     parser.add_argument('--batch-size', type=int, required=True,
                         help="Batch size.")
-    # parser.add_argument('--output-dir', type=str, required=True,
-    #                     help="Directory to save the trained model.")
+    parser.add_argument('--learning-rate', type=float, required=True,
+                        help="Learning rate.")
 
     args = parser.parse_args()
 
