@@ -25,7 +25,7 @@ def eval_model(device, batch_size):
     # model_config.model_type = 'gpt2'
     model_config.model_type = None
     model_config.n_layer = 18
-    model_config.n_head = 4
+    model_config.n_head = 8
     model_config.n_embd = 1024
     
     model_config.num_vars = 8
