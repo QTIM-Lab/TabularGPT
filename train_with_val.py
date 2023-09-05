@@ -83,7 +83,7 @@ def main():
     #                     help="Directory to save the trained model.")
     parser.add_argument('--n-layer', type=int, required=True,
                         help="Number of layers.")
-    parser.add_argument('--n-head', type=float, required=True,
+    parser.add_argument('--n-head', type=int, required=True,
                         help="Number of heads.")
     parser.add_argument('--n-embd', type=int, required=True,
                         help="Embedding dim.")
