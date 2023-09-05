@@ -88,7 +88,7 @@ def main():
 
     args = parser.parse_args()
 
-    train_model(device, args.batch_size)
+    train_model(device, args.batch_size, args.learning_rate)
 
 if __name__ == "__main__":
     main()
