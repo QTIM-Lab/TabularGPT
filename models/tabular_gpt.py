@@ -27,7 +27,7 @@ class TabularGPT(GPT):
                                            config.n_embd) if str(i) in config.embed_vars
                               else nn.Linear(1,
                                              config.n_embd,
-                                             bias=True)) 
+                                             bias=False)) 
                 for i in range(config.num_vars)
             }
         )
