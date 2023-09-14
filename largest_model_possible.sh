@@ -1,1 +1,1 @@
-python train_with_val.py --n-layer=48 --n-head=32 --n-embd=1024 --attn-pdrop=0.1 --embd-pdrop=0.1 --resid-pdrop=0.1 --batch-size=32 --learning-rate=0.00000005
+python train_with_val.py --n-layer=40 --n-head=32 --n-embd=1024 --attn-pdrop=0.1 --embd-pdrop=0.1 --resid-pdrop=0.1 --batch-size=32 --learning-rate=0.00000005
